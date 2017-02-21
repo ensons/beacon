@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH << File.expand_path('../../lib', __FILE__)
+require 'beacon'
+
+begin
+  Beacon::Log.info { 'Starting Ensons beacon...' }
+  Beacon::Log.info { "Version #{Beacon::Version::VERSION}" }
+  Beacon::Loop.new.call
+
+rescue Interrupt
+  Beacon::Log.warn { 'User interrupted.' }
+  exit 99
+end
