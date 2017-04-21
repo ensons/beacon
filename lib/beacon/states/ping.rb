@@ -42,7 +42,7 @@ module Beacon
       end
 
       def path
-        "/api/v1/sattelites/#{Uuid.call}"
+        "/api/v1/satellites/#{Uuid.call}"
       end
 
       def ssl?
