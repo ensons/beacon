@@ -16,7 +16,7 @@ module Beacon
     end
 
     def self.path
-      Pathname.new('/home/pi/uuid')
+      Pathname.new(Beacon.config.uuid_path)
     end
   end
 end

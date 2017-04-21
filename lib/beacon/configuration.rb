@@ -31,6 +31,12 @@ module Beacon
     end
     attr_writer :delay
 
+    def uuid_path
+      return @uuid_path if defined?(@uuid_path)
+      default_uuid_path
+    end
+    attr_writer :uuid_path
+
     private
 
     def default_logger
@@ -63,6 +69,10 @@ module Beacon
 
     def default_online_check_host
       ENV['ENSONS_BEACON_ONLINE_CHECK_HOST'] || 'example.com'
+    end
+
+    def default_uuid_path
+      ENV['ENSONS_BEACON_UUID_PATH'] || '/home/pi/uuid'
     end
 
     def default_delay
