@@ -26,7 +26,7 @@ module Beacon
     end
 
     def self.connect!
-      Net::HTTP.start(Beacon.config.online_check_host, 80) do |connection|
+      Net::HTTP.start('example.com', 80) do |connection|
         return connection.head '/'
       end
     end

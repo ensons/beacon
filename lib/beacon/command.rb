@@ -1,6 +1,13 @@
 module Beacon
   # Executes arbitrary commands by shelling out.
   class Command
+    # Convenience wrapper for Command.new().call
+    #
+    # @example
+    #   Beacon::Command.call(['whoami']) #=> "john\n"
+    #
+    # @return [String] The combined stdout and stderr of the command
+    #
     def self.call(command)
       new(command).call
     end
@@ -17,9 +24,9 @@ module Beacon
     # Executes the command by shelling out.
     #
     # @example
-    #   Beacon::Command.new(['whoami]).call #=> "john\n"
+    #   Beacon::Command.new(['whoami']).call #=> "john\n"
     #
-    # @return [String] The combined stdout and stderr that the command
+    # @return [String] The combined stdout and stderr of the command
     #
     def call
       Log.debug { "Running command: #{command.join(' ')}" }

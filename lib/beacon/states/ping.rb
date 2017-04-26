@@ -59,12 +59,12 @@ module Beacon
       def payload
         {
           satellite: {
-            version: Beacon::Version::VERSION,
+            disk: System.df,
+            memory: System.free,
             ruby: System.ruby,
             system: System.uname,
             uptime: System.uptime,
-            disk: System.df,
-            memory: System.free
+            version: Beacon::Version::VERSION
           }
         }
       end

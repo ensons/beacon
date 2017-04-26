@@ -7,23 +7,11 @@ module Beacon
     end
     attr_writer :logger
 
-    def logger_target
-      return @logger_target if defined?(@logger_target)
-      default_logger_target
-    end
-    attr_writer :logger_target
-
     def endpoint
       return @endpoint if defined?(@endpoint)
       default_endpoint
     end
     attr_writer :endpoint
-
-    def online_check_host
-      return @online_check_host if defined?(@online_check_host)
-      default_online_check_host
-    end
-    attr_writer :online_check_host
 
     def delay
       return @delay if defined?(@delay)
@@ -59,16 +47,8 @@ module Beacon
       end
     end
 
-    def default_logger_target
-      ENV['ENSONS_BEACON_LOGGER_TARGET'] || STDOUT
-    end
-
     def default_endpoint
       ENV['ENSONS_BEACON_ENDPOINT'] || 'https://ensons.de'
-    end
-
-    def default_online_check_host
-      ENV['ENSONS_BEACON_ONLINE_CHECK_HOST'] || 'example.com'
     end
 
     def default_uuid_path
