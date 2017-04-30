@@ -16,7 +16,7 @@ module Beacon
 
       def wait
         Log.debug { "Waiting because I'm offline" }
-        sleep 5
+        Sleep.call 5
       end
 
       # There is no risk to overload any server when we're offline.

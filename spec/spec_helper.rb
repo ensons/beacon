@@ -20,4 +20,8 @@ RSpec.configure do |config|
       beacon_config.endpoint = 'http://0.0.0.0'
     end
   end
+
+  config.before :each, :awake do
+    allow(Beacon::Sleep).to receive(:call)
+  end
 end

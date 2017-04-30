@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Beacon::State do
+RSpec.describe Beacon::State, :awake do
   describe '#state' do
     it 'is Ping' do
       instance = Beacon::State.new

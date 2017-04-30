@@ -16,7 +16,7 @@ module Beacon
 
       def wait
         Log.debug { 'Waiting because ping failed' }
-        sleep 5
+        Sleep.call 5
       end
 
       def next_state

@@ -16,7 +16,7 @@ module Beacon
 
       def wait
         Log.debug { "Waiting because I'll retry in 5 intervals" }
-        sleep Beacon.config.delay
+        Sleep.call Beacon.config.delay
       end
 
       def next_state

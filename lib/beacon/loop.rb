@@ -20,7 +20,7 @@ module Beacon
 
     rescue StandardError, SystemCallError => exception
       puts exception
-      sleep 10
+      Sleep.call 10
     end
 
     def call!
@@ -30,7 +30,7 @@ module Beacon
       # Human friendly error handling
       Log.error { "#{exception.class} #{exception.message}" }
       Log.error { exception.backtrace }
-      sleep 10
+      Sleep.call 10
     end
   end
 end

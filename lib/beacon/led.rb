@@ -4,9 +4,9 @@ module Beacon
     def blink(times: 1, duration: 0.1, pause: 0.1)
       times.times do
         on!
-        sleep duration
+        Sleep.call duration
         off!
-        sleep pause
+        Sleep.call pause
       end
     ensure
       off!

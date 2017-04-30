@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Beacon::Led do
+RSpec.describe Beacon::Led, :awake do
   describe '#blink' do
     describe 'path is unaccessible' do
       it 'does not cause an exception' do
