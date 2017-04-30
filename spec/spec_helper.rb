@@ -15,9 +15,9 @@ RSpec.configure do |config|
 
   config.before :each do
     Beacon.configure do |beacon_config|
-      beacon_config.delay = 0
       beacon_config.logger = test_logger
       beacon_config.endpoint = 'http://0.0.0.0'
+      beacon_config.uuid_path = Tempfile.new('uuid')
     end
   end
 
