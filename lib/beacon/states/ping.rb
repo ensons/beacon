@@ -4,7 +4,6 @@ module Beacon
     class Ping
       def call
         call!
-
       rescue => exception
         Log.warn { [exception.class, exception.message].join ': ' }
         Log.debug { exception.backtrace }
@@ -22,7 +21,7 @@ module Beacon
         Log.debug { "Calling PUT #{uri}" }
         response = connect!
 
-        if response == Net::HTTPCreated
+        if response.is_a?(Net::HTTPCreated)
           Log.info { 'Ping successfully delivered.' }
           States::Success
         else
