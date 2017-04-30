@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Beacon::Configuration do
+RSpec.describe Beacon::Configuration do
   describe '#logger' do
     it 'logs to STDOUT' do
       logger = Beacon::Configuration.new.logger
@@ -9,28 +9,28 @@ describe Beacon::Configuration do
       stdout_logger = ::Logger.new(STDOUT)
       stdout_device = stdout_logger.instance_variable_get(:@logdev).dev
 
-      assert_equal stdout_device, device
+      expect(device).to eq stdout_device
     end
   end
 
   describe '#endpoint' do
     it 'is the server protocol and hostname' do
       endpoint = Beacon::Configuration.new.endpoint
-      assert_equal 'https://ensons.de', endpoint
+      expect(endpoint).to eq 'https://ensons.de'
     end
   end
 
   describe '#delay' do
     it 'is one minute' do
       delay = Beacon::Configuration.new.delay
-      assert_equal 60, delay
+      expect(delay).to eq 60
     end
   end
 
   describe '#uuid_path' do
     it 'is the raspberry absolute home path' do
       uuid_path = Beacon::Configuration.new.uuid_path
-      assert_equal '/home/pi/uuid', uuid_path
+      expect(uuid_path).to eq '/home/pi/uuid'
     end
   end
 end

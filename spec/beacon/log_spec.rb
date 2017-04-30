@@ -1,13 +1,11 @@
 require 'spec_helper'
 
-describe Beacon::Log do
+RSpec.describe Beacon::Log do
   describe '#debug' do
     describe 'no logger' do
       it 'does not fail' do
-        original_logger = Beacon.config.logger
         Beacon.config.logger = nil
         Beacon::Log.debug { "wow" }
-        Beacon.config.logger = original_logger
       end
     end
 
@@ -16,7 +14,7 @@ describe Beacon::Log do
         message = "debugging#{Time.now.to_i}"
         Beacon::Log.debug { message }
         log_file = Pathname.new('log/test.log')
-        assert_equal true, log_file.read.include?("DEBUG -- #{message}")
+        expect(log_file.read).to include "DEBUG -- #{message}"
       end
     end
   end
@@ -24,10 +22,8 @@ describe Beacon::Log do
   describe '#info' do
     describe 'no logger' do
       it 'does not fail' do
-        original_logger = Beacon.config.logger
         Beacon.config.logger = nil
         Beacon::Log.info { "wow" }
-        Beacon.config.logger = original_logger
       end
     end
 
@@ -36,7 +32,7 @@ describe Beacon::Log do
         message = "information#{Time.now.to_i}"
         Beacon::Log.info { message }
         log_file = Pathname.new('log/test.log')
-        assert_equal true, log_file.read.include?("INFO -- #{message}")
+        expect(log_file.read).to include "INFO -- #{message}"
       end
     end
   end
@@ -44,10 +40,8 @@ describe Beacon::Log do
   describe '#warn' do
     describe 'no logger' do
       it 'does not fail' do
-        original_logger = Beacon.config.logger
         Beacon.config.logger = nil
         Beacon::Log.warn { "wow" }
-        Beacon.config.logger = original_logger
       end
     end
 
@@ -56,7 +50,7 @@ describe Beacon::Log do
         message = "warning#{Time.now.to_i}"
         Beacon::Log.warn { message }
         log_file = Pathname.new('log/test.log')
-        assert_equal true, log_file.read.include?("WARN -- #{message}")
+        expect(log_file.read).to include "WARN -- #{message}"
       end
     end
   end
@@ -64,10 +58,8 @@ describe Beacon::Log do
   describe '#error' do
     describe 'no logger' do
       it 'does not fail' do
-        original_logger = Beacon.config.logger
         Beacon.config.logger = nil
         Beacon::Log.error { "wow" }
-        Beacon.config.logger = original_logger
       end
     end
 
@@ -76,7 +68,7 @@ describe Beacon::Log do
         message = "error#{Time.now.to_i}"
         Beacon::Log.error { message }
         log_file = Pathname.new('log/test.log')
-        assert_equal true, log_file.read.include?("ERROR -- #{message}")
+        expect(log_file.read).to include "ERROR -- #{message}"
       end
     end
   end

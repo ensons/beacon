@@ -1,25 +1,25 @@
 require 'spec_helper'
 
-describe Beacon do
+RSpec.describe Beacon do
   describe '.config' do
     it 'is a configuration instance' do
-      instance = Beacon.config
-      assert_instance_of Beacon::Configuration, instance
+      configuration = Beacon.config
+      expect(configuration).to be_instance_of Beacon::Configuration
     end
 
     it 'memoizes the configuration instance' do
-      assert_same Beacon.config, Beacon.config
+      expect(Beacon.config).to be Beacon.config
     end
   end
 
   describe '.configure' do
     it 'yields the configuration instance' do
-      instance = nil
+      configuration = nil
       Beacon.configure do |config|
-        instance = config
+        configuration = config
       end
 
-      assert_same Beacon.config, instance
+      expect(configuration).to be Beacon.config
     end
   end
 end

@@ -113,6 +113,16 @@ Der Raspberry Pi wartet x Minuten bis zur nächsten Aktivität. Z. B. 5 mal kurz
 * Rubocop
 * Continuous Integration (circleci)
 
+## Entwicklung
+
+### Tests
+
+```bash
+gem install bundler
+bundle install
+bundle exec rspec
+```
+
 ## Lizenz
 
 * MIT

@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Beacon::Loop do
+RSpec.describe Beacon::Loop do
   describe '#state' do
     it 'is an instance of State' do
-      instance = Beacon::Loop.new
-      assert_instance_of Beacon::State, instance.send(:state)
+      looper = Beacon::Loop.new
+      expect(looper.send(:state)).to be_instance_of Beacon::State
     end
   end
 end
