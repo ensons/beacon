@@ -13,11 +13,14 @@ RSpec.configure do |config|
   config.color = true
   config.order = :random if ENV['CI']
 
-  config.before :each do
-    Beacon.configure do |beacon_config|
-      beacon_config.logger = test_logger
-      beacon_config.endpoint = 'http://0.0.0.0'
-      beacon_config.uuid_path = Tempfile.new('uuid')
+  config.around :each do |example|
+    Tempfile.create('uuid') do |tempfile|
+      Beacon.configure do |beacon_config|
+        beacon_config.logger = test_logger
+        beacon_config.endpoint = 'http://0.0.0.0'
+        beacon_config.uuid_path = tempfile
+      end
+      example.run
     end
   end
 
