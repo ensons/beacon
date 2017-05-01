@@ -5,3 +5,7 @@ AllCops:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
+
+# 80 is exaggerated, but we still try to keep it as low as possible
+Metrics/LineLength:
+  Max: 90
