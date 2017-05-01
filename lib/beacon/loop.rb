@@ -17,7 +17,6 @@ module Beacon
 
     def failsafe
       yield
-
     rescue StandardError, SystemCallError => exception
       puts exception
       Sleep.call 10
@@ -25,7 +24,6 @@ module Beacon
 
     def call!
       state.call
-
     rescue StandardError, SystemCallError => exception
       # Human friendly error handling
       Log.error { "#{exception.class} #{exception.message}" }

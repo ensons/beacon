@@ -9,6 +9,8 @@ module Beacon
         Sleep.call pause
       end
     ensure
+      # Even if the process dies (e.g. due to Interrupt),
+      # we must make sure the LED is not accidentally left shining.
       off!
     end
 

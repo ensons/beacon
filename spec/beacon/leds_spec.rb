@@ -2,34 +2,40 @@ require 'spec_helper'
 
 RSpec.describe Beacon::Leds, :awake do
   describe '.blink!' do
-    describe 'path is unaccessible' do
-      it 'does not cause an exception' do
-        Beacon::Leds.blink!(1)
-      end
+    it 'proxies to the LED' do
+      led = instance_double 'Beacon::Led'
+      expect(led).to receive(:blink).with(times: 1)
+      expect(Beacon::Led).to receive(:new).and_return led
+      described_class.blink! 1
     end
   end
 
   describe '.stare!' do
-    describe 'path is unaccessible' do
-      it 'does not cause an exception' do
-        Beacon::Leds.stare!
-      end
+    it 'proxies to the LED' do
+      led = instance_double 'Beacon::Led'
+      expect(led).to receive(:blink).with(duration: 3)
+      expect(Beacon::Led).to receive(:new).and_return led
+      described_class.stare!
     end
   end
 
   describe '.flash!' do
-    describe 'path is unaccessible' do
-      it 'does not cause an exception' do
-        Beacon::Leds.flash!
-      end
+    it 'proxies to the LED' do
+      led = instance_double 'Beacon::Led'
+      expect(led).to receive(:blink).with(times: 2, duration: 0.7, pause: 0.3)
+      expect(Beacon::Led).to receive(:new).and_return led
+      described_class.flash!
     end
   end
 
   describe '.sos!' do
-    describe 'path is unaccessible' do
-      it 'does not cause an exception' do
-        Beacon::Leds.sos!
-      end
+    it 'proxies to the LED' do
+      led = instance_double 'Beacon::Led'
+      expect(led).to receive(:blink).with(times: 3)
+      expect(led).to receive(:blink).with(times: 3, duration: 0.5)
+      expect(led).to receive(:blink).with(times: 3)
+      allow(Beacon::Led).to receive(:new).and_return led
+      described_class.sos!
     end
   end
 end

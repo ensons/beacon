@@ -1,6 +1,10 @@
-require 'pathname'
-require 'webmock/rspec'
+require 'simplecov'
+SimpleCov.start
+
 require 'beacon'
+require 'pathname'
+require 'tempfile'
+require 'webmock/rspec'
 
 root_path = Pathname.new(__FILE__).join('../..').expand_path
 test_logger = Logger.new root_path.join('log', 'test.log')
@@ -15,6 +19,7 @@ RSpec.configure do |config|
 
   config.around :each do |example|
     Tempfile.create('uuid') do |tempfile|
+      Beacon.reset!
       Beacon.configure do |beacon_config|
         beacon_config.logger = test_logger
         beacon_config.endpoint = 'http://0.0.0.0'
