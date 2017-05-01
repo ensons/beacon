@@ -5,7 +5,7 @@ RSpec.describe Beacon::Log do
     describe 'no logger' do
       it 'does not fail' do
         Beacon.config.logger = nil
-        Beacon::Log.debug { "wow" }
+        Beacon::Log.debug { 'wow' }
       end
     end
 
@@ -23,7 +23,7 @@ RSpec.describe Beacon::Log do
     describe 'no logger' do
       it 'does not fail' do
         Beacon.config.logger = nil
-        Beacon::Log.info { "wow" }
+        Beacon::Log.info { 'wow' }
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe Beacon::Log do
     describe 'no logger' do
       it 'does not fail' do
         Beacon.config.logger = nil
-        Beacon::Log.warn { "wow" }
+        Beacon::Log.warn { 'wow' }
       end
     end
 
@@ -59,7 +59,7 @@ RSpec.describe Beacon::Log do
     describe 'no logger' do
       it 'does not fail' do
         Beacon.config.logger = nil
-        Beacon::Log.error { "wow" }
+        Beacon::Log.error { 'wow' }
       end
     end
 

@@ -76,5 +76,4 @@ RSpec.describe Beacon::Led, :awake do
       end
     end
   end
-
 end

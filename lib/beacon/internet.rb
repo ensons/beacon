@@ -4,7 +4,6 @@ module Beacon
     def self.online?
       Log.debug { 'Testing your Internet connection...' }
       connect
-
     rescue => exception
       Log.debug { [exception.class, exception.message].join(': ') }
       Log.debug { 'I determined that you are OFFLINE the hard way' }
