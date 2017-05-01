@@ -1,7 +1,12 @@
 .DS_Store
 /.bundle
 /.yardoc
+coverage
 
 # Ignore logfiles, but keep the log directory
 /log/*
 !/log/.gitkeep
+
+# Ignore docfiles, but keep the doc directory
+/doc/*
+!/doc/.gitkeep
