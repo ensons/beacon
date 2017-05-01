@@ -26,7 +26,7 @@ module Beacon
 
     def write(value)
       path.write value
-    rescue StandardError, SystemCallError => exception
+    rescue => exception
       Log.error { "#{exception.class} #{exception.message}" }
       Log.warn { "Could not write #{value} to #{path}" }
       nil

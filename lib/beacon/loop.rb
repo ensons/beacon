@@ -17,14 +17,14 @@ module Beacon
 
     def failsafe
       yield
-    rescue StandardError, SystemCallError => exception
+    rescue => exception
       puts exception
       Sleep.call 10
     end
 
     def call!
       state.call
-    rescue StandardError, SystemCallError => exception
+    rescue => exception
       # Human friendly error handling
       Log.error { "#{exception.class} #{exception.message}" }
       Log.error { exception.backtrace }

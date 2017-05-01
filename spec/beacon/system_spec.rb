@@ -4,7 +4,7 @@ RSpec.describe Beacon::System do
   describe '.uname' do
     it 'includes the operating system' do
       uname = Beacon::System.uname
-      expect(uname).to match /Darwin|Linux/
+      expect(uname).to match(/Darwin|Linux/)
     end
   end
 

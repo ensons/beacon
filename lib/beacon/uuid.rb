@@ -8,7 +8,7 @@ module Beacon
         path.write uuid
       end
       path.read
-    rescue StandardError, SystemCallError => exception
+    rescue => exception
       Log.error { "#{exception.class} #{exception.message}" }
       Log.error { 'Could not persist device UUID' }
       nil
