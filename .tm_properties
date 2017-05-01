@@ -1,0 +1,5 @@
+# Configuration for TextMate
+
+excludeFiles = "{$excludeFiles,log/*}"
+excludeInFileChooser = "{$excludeInFileChooser,coverage,doc}"
+excludeInFolderSearch = "{$excludeInFolderSearch,coverage,doc}"
