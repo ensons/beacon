@@ -19,7 +19,7 @@ module Beacon
       yield
     rescue => exception
       puts exception
-      Sleep.call 10
+      sleep 10
     end
 
     def call!

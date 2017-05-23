@@ -3,23 +3,23 @@ require 'spec_helper'
 RSpec.describe Beacon do
   describe '.config' do
     it 'is a configuration instance' do
-      configuration = Beacon.config
+      configuration = described_class.config
       expect(configuration).to be_instance_of Beacon::Configuration
     end
 
     it 'memoizes the configuration instance' do
-      expect(Beacon.config).to be Beacon.config
+      expect(described_class.config).to be described_class.config
     end
   end
 
   describe '.configure' do
     it 'yields the configuration instance' do
       configuration = nil
-      Beacon.configure do |config|
+      described_class.configure do |config|
         configuration = config
       end
 
-      expect(configuration).to be Beacon.config
+      expect(configuration).to be described_class.config
     end
   end
 end
