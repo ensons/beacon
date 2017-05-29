@@ -30,13 +30,13 @@ Manche Router, z. B. von der Telekom, unterstützen jedoch nur eine kleine Auswa
 
 Die Fritz!Box unterstützt relativ viele Drittanbieter, benutzt aber teilweise unsichere Kommunikationsprotokolle (kein SSL/TLS).
 
-Darum bieten wir hier eine Lösung an, die losgelöst von Ihrem Router funktioniert. Das kostet **keine** Nutzungsgebühr, bindet Sie nicht an Drittanbieter und benutzt einen sicheren Kommunikationskanal.
+Darum bieten wir hier eine Lösung an, die losgelöst von Ihrem Router funktioniert. Sie kostet **keine** Nutzungsgebühr, bindet Sie nicht an Drittanbieter und benutzt einen sicheren Kommunikationskanal.
 
 ## 3. Sicherheit und Philosophie
 
 Sie erhalten also ein Gerät, dass in Ihrem Keller am Strom angeschlossen und mit Ihrem Netzwerk bzw. Internet verbunden ist.
 
-Spätestens jetzt sollten in Ihren Gedanken rote Lampen aufleuchten:
+Spätestens jetzt sollten Sie sich fragen:
 
 * Woher weiß ich, was das Gerät eigentlich macht?
 * Wie wird mein Datenschutz gewährleistet?
@@ -76,33 +76,53 @@ Es folgt ein Überblick über die generelle Funktionsweise. Technische Details e
 
 ## 4. Funktionsweise
 
-Beim starten wird zuerst versucht den `ensons.de` Server anzusprechen um ihn über die aktuelle IP-Adresse zu informieren. Weitere Zustandsübergänge werden entsprechend dem folgenden Zustandsdiagramm ausgeführt:
-
-![Beacon State Diagram](https://s3.eu-central-1.amazonaws.com/ensons-production/media/beacon/states.svg)
-
-In jedem Zustand gibt das Gerät ein anderes LED-Signal ab. Folgender Abschnitt beschreibt die einzelnen Zustände.
-
-### 4.1 LED Signale
-
-Die grüne Aktvitäts-LED auf der Vorderseite des Raspberry Pi gibt spätestens alle 60 Sekunden ein Leuchtsignal ab.
+Der Raspberry Pi hat zwei LEDs auf der Vorderseite. Die rote LED leuchtet immer (Stromzufuhr). Die grüne LED blinkt während des Hochfahrens des Gerätes beim lesen und schreiben auf der Speicherkarte. 
 
 ![Beacon LEDs](https://s3.eu-central-1.amazonaws.com/ensons-production/media/beacon/leds.jpg)
 
-#### 3 kurz, 3 lang, 3 kurz (SOS)
+Sobald das Gerät dann bereit ist, signalisiert die grüne LED in welchem Zustand es sich befindet. Sie gibt spätestens alle 60 Sekunden ein Leuchtsignal ab.
 
-Es besteht keine Verbindung zum Internet. Stellen Sie in dem Fall sicher, dass das Netzwerkkabel eine IP-Adresse per DHCP vergibt und mit dem Internet verbunden ist.
+Folgendes Zustandsdiagramm beschreibt die Funktionsweise dieser Software. Es beginnt mit dem Zustand `Start`.
 
-#### 1 mal langes leuchten
+![Beacon State Diagram](https://s3.eu-central-1.amazonaws.com/ensons-production/media/beacon/states.svg)
 
-Der `ensons.de` Server wurde erfolgreich erreicht und Ihre IP-Adresse erkannt. Alles ist richtig konfiguriert.
+Folgender Abschnitt beschreibt die einzelnen Zustände und die jeweils dazugehörigen LED-Signale.
 
-#### 2 mal aufleuchten
+### 4.1 Status `Pinging server`
 
-Es besteht zwar eine Internetverbindung, der `ensons.de` Server konnte aber nicht erfolgreich angesprochen werden. Entweder funktioniert der Server gerade nicht, oder der Raspberry Pi selbst ist fehlkonfiguriert.
+Zu Beginn wird versucht den `ensons.de` Server anzusprechen um ihn über die aktuelle IP-Adresse zu informieren. 
 
-#### X mal kurzes blinken
+### 4.2 Status `Offline`
 
-Der Raspberry Pi wartet x Minuten bis zur nächsten Aktivität. Z. B. 5 mal kurzes blinken bedeutet 5 Minuten Wartezeit.
+Wenn keine Verbindung zum Internet besteht (roter Pfeil auf dem Zustandsdiagramm), gibt die grüne Aktivitäts-LED ein S.O.S.-Signal ab (3 kurz, 3 lang, 3 kurz). 
+
+Stellen Sie in diesem Zustand sicher, dass das Netzwerkkabel dem Raspberry Pi eine IP-Adresse per DHCP vergibt und mit dem Internet verbunden ist. Entfernen Sie ggf. die Stromzufuhr um das Gerät neu zu starten.
+
+Alle 5 Sekunden wird erneut versucht eine Verbindung zum `ensons.de` Server aufzubauen.
+
+### 4.3 Status `Ping success`
+
+Wenn der `ensons.de` Server bestätigt hat, dass die Anfrage erfolgreich eingegangen ist (grüner Pfeil auf dem Zustandsdiagramm), dann leuchtet die grüne LED einmal 3 Sekunden lang auf.
+
+Alles ist richtig konfiguriert und Ihre IP-Adresse wurde erkannt.
+
+Nach diesem Zustand geht das Gerät in eine Warteschleife bis zum nächsten Versuch den Server anzusprechen.
+
+### 4.4 Status `Error`
+
+Sollte der `ensons.de` Server nicht erreichbar sein oder unerwartet reagieren, obwohl eine Internetverbindung besteht, leuchtet die grüne LED  zwei mal auf (2x eine halbe Sekunde).
+
+Sollte dieser Status bestehen bleiben, kontaktieren Sie bitte unseren Kundendienst oder starten Sie den Raspberry Pi neu.
+
+Das Gerät geht auch hier in eine Warteschleife bevor erneut eine Verbindung hergestellt wird (siehe Status `Ping success`).
+
+### 4.5 Status `Wait x Intervals`
+
+In der Warteschleife gibt die grüne LED durch 5 kurze Blinksignale eine Wartezeit von 5 Minuten an. 60 Sekunden später blinkt sie dann 4 mal, und so weiter. Eine Minute vor Ende der Warteschleife blinkt sie einmal.
+
+Nach Ablauf von insgesamt 5 Minuten geht es weiter zum Ausgangszustand `Pinging server`.
+
+
 
 ## Code-Konventionen
 
